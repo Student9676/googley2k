@@ -7,7 +7,7 @@ function App() {
   
   return (
     // normal centering looks uncentered so i added a static margin. plz change it if you know how to make it dynamic/better
-    <div className="min-h-screen flex items-center justify-center mt-[-30px]"> 
+    <div className="min-h-screen bg-gradient-to-br from-blue-200 via-pink-200 to-purple-300 flex flex-col items-center justify-center"> 
       <div className="flex flex-col items-center gap-0.5">
         
         <div className='flex flex-col items-center gap-7'>
