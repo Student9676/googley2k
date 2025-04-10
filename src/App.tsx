@@ -1,34 +1,36 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import googleLogo from './assets/google.png'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const [searchText, setSearchText] = useState('');
+  
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    // normal centering looks uncentered so i added a static margin. plz change it if you know how to make it dynamic/better
+    <div className="min-h-screen flex items-center justify-center mt-[-30px]"> 
+      <div className="flex flex-col items-center gap-0.5">
+        
+        <div className='flex flex-col items-center gap-7'>
+        <img src={googleLogo} alt="Google Logo" className="max-w-xs"/>
+        <p>Search 1,326,920,000 webpages</p>
+        </div>
+        
+        <input value={searchText} 
+        onChange={(e)=>setSearchText(e.target.value)} 
+        type="text" 
+        className="border border-black w-md"/>
+      
+        <div className="flex items-center gap-0.5">
+          <button 
+          className="text-white" 
+          onClick={() => alert(`Searching for: ${searchText}`)}>
+            Google Search
+          </button>
+          <button className="text-white">I'm Feeling Lucky</button>
+        </div>
+      
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   )
 }
 
