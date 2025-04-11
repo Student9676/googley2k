@@ -123,7 +123,7 @@ function Home() {
         </h1>
         
         <p className="text-sm font-mono text-gray-800">
-          Search 1,326,920,000 webpages
+          Search to travel
         </p>
       </div>
       {/* SEARCH INPUT */}
@@ -140,7 +140,7 @@ function Home() {
           onClick={handleSearch}
           className="bg-slate-100 border-2 border-gray-400 px-4 py-2 font-bold font-mono text-sm hover:bg-purple-200 hover:shadow-lg transition-all"
         >
-          Google Search
+          Search Now!
         </button>
 
         <button
