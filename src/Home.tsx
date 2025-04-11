@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import googleLogo from './assets/google.png';
 import clippyJumping from './assets/clippy_jumping.gif';
 import './App.css';
+import { Widget, CalanderWidget } from './Widget';
 import Clippy from './Clippy';
 
 function Home() {
@@ -41,21 +42,25 @@ function Home() {
   const snapshotRanges: { [key: string]: string[] } = {
     "instagram.com": ['20161201000000', '20141001000000', '20130101000000'],
     "facebook.com": ['20141201000000', '20111225000000', '20081201000000'],
-    "google.com": ['20021201000000', '20011225000000', '20010401000000'],
+    "google.com": ['20051101180134', '20030902000530', '20011220012356', '20021201000000', '20011225000000', '20010401000000'],
     "youtube.com": ['20131201000000', '20101201000000', '20081201000000'],
     "default": ['20141201000000', '20101201000000', '20031001000000']
   };
 
   const getTimestampsForDomain = (domain: string): string[] => {
-    for (const key in snapshotRanges) {
-      if (domain.includes(key)) return snapshotRanges[key];
+    const lower = domain.toLowerCase();
+
+    if(lower.includes("google.com")){
+      return['20051101180134', '20030902000530', '20011220012356'];
+    }
+    for(const key in snapshotRanges){
+      if(lower.includes(key)) return snapshotRanges[key];
     }
     return snapshotRanges["default"];
   };
 
   const fetchWaybackSnapshot = async (url: string, date: string) => {
     try {
-    
       const api = `https://archive.org/wayback/available?url=${encodeURIComponent(url)}&timestamp=${date}`;
       const res = await fetch(api);
       const data = await res.json();
@@ -149,10 +154,7 @@ function Home() {
     for (const year of timestamps) {
       const archived = await fetchWaybackSnapshot(domain, year);
       if (archived) {
-        setTimeout(() => {
-          setIsLoading(false);
-          navigate('/snapshot', { state: { snapshotUrl: archived } });
-        }, 1500);
+        navigate('/snapshot', { state: { snapshotUrl: archived } });
         return;
       }
     }
@@ -164,19 +166,26 @@ function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-200 via-pink-200 to-purple-300 flex flex-col items-center justify-center px-4">
+      {/* WIDGETS - Fixed to the left */}
+      <div className="absolute left-8 top-10 flex flex-col gap-6">
+        <Widget />
+        <CalanderWidget />
+      </div>
+      
+      {/* LOGO + Tagline */}
       <div className="flex flex-col items-center gap-4 mb-6">
         <img src={googleLogo} alt="Google Logo" className="max-w-xs" />
         <p className="text-sm font-mono text-gray-800">
-          Search 1,326,920,000 webpages
+          Search to travel
         </p>
       </div>
-
+      {/* SEARCH INPUT */}
       <input
         value={searchText}
         onChange={(e) => setSearchText(e.target.value)}
         type="text"
         placeholder="Enter your search..."
-        className="w-full max-w-md px-4 py-2 border-2 border-gray-400 rounded-md shadow-inner mb-4 font-mono text-sm"
+        className="w-full max-w-md px-4 py-2 border-2 border-gray-400 shadow-inner mb-4 font-mono text-sm"
       />
 
       <p className="text-xs text-gay-600 italic mt-2 mb-4 font-mono text center">
@@ -186,14 +195,14 @@ function Home() {
       <div className="flex gap-4">
         <button
           onClick={handleSearch}
-          className="bg-slate-100 border-2 border-gray-400 px-4 py-2 rounded-md font-bold font-mono text-sm hover:bg-purple-200 hover:shadow-lg transition-all"
+          className="bg-slate-100 border-2 border-gray-400 px-4 py-2 font-bold font-mono text-sm hover:bg-purple-200 hover:shadow-lg transition-all"
         >
-          Google Search
+          Search Now!
         </button>
 
         <button
           onClick={handleLucky}
-          className="bg-slate-100 border-2 border-gray-400 px-4 py-2 rounded-md font-bold font-mono text-sm hover:bg-purple-200 hover:shadow-lg transition-all"
+          className="bg-slate-100 border-2 border-gray-400 px-4 py-2 font-bold font-mono text-sm hover:bg-purple-200 hover:shadow-lg transition-all"
         >
           I'm Feeling Lucky
         </button>
@@ -201,7 +210,7 @@ function Home() {
 
       {isLoading && (
         <div className="mt-6 flex flex-col items-center">
-          <img src={clippyJumping} alt="Loading Clippy" className="w-24 h-24 animate-bounce" />
+          <img src={clippyJumping} alt="Loading Clippy" className="w-12.5" />
           <p className="text-sm text-gray-700 font-mono mt-2">Clippy is searching...</p>
         </div>
       )}
