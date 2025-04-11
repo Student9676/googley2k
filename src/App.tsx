@@ -71,9 +71,6 @@ const handleLucky = async () => {
     "google.com",
     "yahoo.com",
     "ask.com",
-    "baidu.com",
-    "yandex.com",
-    "googleplus.com",
     "youtube.com"
   ];
 
@@ -143,7 +140,7 @@ const handleLucky = async () => {
 
       {isLoading && (
         <div className="mt-6 flex flex-col items-center">
-          <img src={clippyJumping} alt="Loading Clippy" className="w-24 h-24" />
+          <img src={clippyJumping} alt="Loading Clippy" className="w-12.5g" />
           <p className="text-sm text-gray-700 font-mono mt-2">Clippy is searching...</p>
         </div>
       )}
