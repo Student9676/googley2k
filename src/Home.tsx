@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import clippyJumping from './assets/clippy_jumping.gif';
+import retroseekLogo from './assets/retroseek.png'
 import './App.css';
 import { Widget, CalanderWidget } from './Widget';
 import Clippy from './Clippy';
@@ -165,68 +166,58 @@ function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-200 via-pink-200 to-purple-300 flex flex-col items-center justify-center px-4">
-      {/* WIDGETS - Fixed to the left */}
-      <div className="absolute left-8 top-10 flex flex-col gap-6">
-        <Widget />
-        <CalanderWidget />
+    <div className="min-h-screen bg-gradient-to-br from-blue-200 via-pink-200 to-purple-300 flex flex-col items-center justify-center px-4 font-pixel text-center relative overflow-hidden">
+  
+      {/* LOGO */}
+      <div className="flex flex-col items-center gap-1 mb-4 z-10 animate-fadeIn">
+        <img
+          src={retroseekLogo}
+          alt="RetroSeek Logo"
+          className="w-150 drop-shadow-glow animate-bounce-slow z-10"
+        />
+        <p className="text-sm font-press text-gray-900">Search to travel through time</p>
       </div>
-      
-      {/* LOGO + Tagline */}
-      <div className="flex flex-col items-center gap-4 mb-6">
-      
-      <h1 className="text-8xl" style={{ fontFamily: '"Libre Baskerville", serif', textShadow: '4px 4px 8px rgba(0, 0, 0, 0.4)'
-}}>
-          <span className="text-blue-600">R</span>
-          <span className="text-red-600">e</span>
-          <span className="text-yellow-500">t</span>
-          <span className="text-blue-600">r</span>
-          <span className="text-green-600">o</span>
-          <span className="text-red-600">S</span>
-          <span className="text-yellow-500">e</span>
-          <span className="text-blue-600">e</span>
-          <span className="text-green-600">k</span>
-        </h1>
-        
-        <p className="text-sm font-mono text-gray-800">
-          Search to travel
-        </p>
-      </div>
+  
       {/* SEARCH INPUT */}
       <input
         value={searchText}
         onChange={(e) => setSearchText(e.target.value)}
         type="text"
-        placeholder="Enter your search..."
-        className="w-full max-w-md px-4 py-2 border-2 border-gray-400 shadow-inner mb-4 font-mono text-sm"
+        placeholder="Enter a website or keyword..."
+        className="w-full max-w-md px-4 py-2 border-2 border-purple-400 bg-white shadow-md mb-4 text-sm font-pixel outline-none focus:ring-2 focus:ring-pink-300"
       />
-
-      <p className="text-xs text-gay-600 italic mt-2 mb-4 font-mono text center">
-        Type a website (like <span className="font-semibold">youtube.com</span>) or a keyword (like <span className="font-semibold">Barbie</span>) to dive through the past!
+  
+      <p className="text-xs italic mb-4 text-gray-700 font-press">
+        Try <span className="font-bold">youtube.com</span> or <span className="font-bold">Barbie</span> to dive through the past!
       </p>
-
-      <div className="flex gap-4">
+  
+      {/* BUTTONS */}
+      <div className="flex gap-4 z-10">
         <button
           onClick={handleSearch}
-          className="bg-slate-100 border-2 border-gray-400 px-4 py-2 font-bold font-mono text-sm hover:bg-purple-200 hover:shadow-lg transition-all"
+          className="bg-purple-600 text-white px-5 py-2 font-press text-xs border-2 border-purple-800 shadow-lg hover:bg-purple-700 hover:scale-105 transition"
         >
           Search Now!
         </button>
-
+  
         <button
           onClick={handleLucky}
-          className="bg-slate-100 border-2 border-gray-400 px-4 py-2 font-bold font-mono text-sm hover:bg-purple-200 hover:shadow-lg transition-all"
+          className="bg-pink-400 text-white px-5 py-2 font-press text-xs border-2 border-pink-600 shadow-lg hover:bg-pink-500 hover:scale-105 transition"
         >
           I'm Feeling Lucky
         </button>
       </div>
-
+  
+      {/* CLIPPY LOADER */}
       {isLoading && (
-        <div className="mt-6 flex flex-col items-center">
-          <img src={clippyJumping} alt="Loading Clippy" className="w-12.5" />
-          <p className="text-sm text-gray-700 font-mono mt-2">Clippy is searching...</p>
+        <div className="mt-6 flex flex-col items-center z-10">
+          <img src={clippyJumping} alt="Clippy loading" className="w-12.5 animate-bounce" />
+          <p className="text-xs font-pixel text-gray-800 mt-2">Clippy is searching the archives...</p>
         </div>
       )}
+  
+      {/* Optional shimmer background layer */}
+      <div className="absolute inset-0 bg-[radial-gradient(#fff3,transparent_70%)] opacity-10 animate-pulse z-0 pointer-events-none" />
     </div>
   );
 }

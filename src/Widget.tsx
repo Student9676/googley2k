@@ -11,15 +11,14 @@ const Widget = () => {
       <div
         className="widget"
         style={{
-          backgroundImage: "url('/weather.jpeg')",
+          backgroundImage: "url('/weatherwidget.jpg')",
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
           color: 'white',
         }}
       >
-        <h2>Weather Widget</h2>
-        <p className="calendar-text">72°F and sunny 🌞</p>
+        
       </div>
     </a>
   );
@@ -31,7 +30,7 @@ const CalanderWidget = () => {
     <div
       className="widget"
       style={{
-        backgroundImage: "url('/pixelcalendar.jpeg')",
+        backgroundImage: "url('/calander.jpg')",
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',

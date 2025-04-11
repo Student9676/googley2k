@@ -56,3 +56,25 @@
 .read-the-docs {
   color: #888;
 }
+
+
+@keyframes bounce-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.animate-bounce-slow {
+  animation: bounce-slow 3s ease-in-out infinite;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(-20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeIn {
+  animation: fadeIn 1s ease-out forwards;
+}
+
+.drop-shadow-glow {
+  filter: drop-shadow(0 0 10px rgba(255, 0, 255, 0.4)) drop-shadow(0 0 5px rgba(0, 255, 255, 0.5));
+}
+

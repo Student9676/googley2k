@@ -1,11 +1,31 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans&family=Press+Start+2P&display=swap" rel="stylesheet">
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
+    <title>RetroSeek</title>
+
+    <!-- ✅ Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- ✅ Retro Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans&family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    <!-- ✅ Tailwind Config Override -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              pixel: ['"Pixelify Sans"', 'monospace'],
+              press: ['"Press Start 2P"', 'cursive'],
+            }
+          }
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
