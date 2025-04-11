@@ -12,10 +12,31 @@ function Home() {
 
   const cleanInput = (input: string) => {
     let cleaned = input.trim().toLowerCase();
-    if (!cleaned.includes('.')) cleaned += '.com';
-    if (!cleaned.startsWith('http')) cleaned = 'http://' + cleaned;
-    return cleaned;
+
+  const isLikelyDomain = cleaned.includes('.') || cleaned.includes('http');
+  if (!isLikelyDomain && knownSites.includes(cleaned)) {
+    cleaned += '.com';
+  }
+
+  if (!cleaned.startsWith('http')) cleaned = 'http://' + cleaned;
+  return cleaned;
   };
+
+  const knownSites = [
+    'askjeeves.com', 'altavista.com', 'aol.com', 'excite.com', 
+  'netscape.com', 'hotmail.com', 'msn.com', 'livejournal.com',
+  'xanga.com', 'slashdot.org', 'somethingawful.com', 'neopets.com','ebay.com',
+  'amazon.com', 'newgrounds.com', 'myspace.com', 'photobucket.com',
+  'friendster.com', 'hi5.com', 'flickr.com', 'delicious.com', 'stumbleupon.com',
+  'deviantart.com', 'gaiaonline.com', 'blogger.com', 'tumblr.com', 'reddit.com', 'youtube.com',
+  'facebook.com', 'instagram.com', 'twitter.com', 'tiktok.com', 'snapchat.com', 'pinterest.com',
+  'linkedin.com', 'whatsapp.com', 'twitch.tv', 'discord.com', 'spotify.com', 'netflix.com',
+  'hulu.com', 'apple.com', 'baidu.com', 'yandex.com', 'niconico.jp', 'vk.com',
+  'qq.com', 'naver.com', 'daum.net', 'toyota.com', 'nintendo.com', 'playstation.com',
+  'pepsi.com', 'coca-cola.com', 'nike.com', 'adidas.com', 'lego.com', 'mattel.com',
+  'barbie.com'
+  ];
+  
 
   const snapshotRanges: { [key: string]: string[] } = {
     "instagram.com": ['20161201000000', '20141001000000', '20130101000000'],
@@ -34,6 +55,7 @@ function Home() {
 
   const fetchWaybackSnapshot = async (url: string, date: string) => {
     try {
+    
       const api = `https://archive.org/wayback/available?url=${encodeURIComponent(url)}&timestamp=${date}`;
       const res = await fetch(api);
       const data = await res.json();
@@ -45,32 +67,80 @@ function Home() {
   };
 
   const handleSearch = async () => {
-    setIsLoading(true);
-    const domain = cleanInput(searchText);
-    const timestamps = getTimestampsForDomain(domain);
-
-    for (const year of timestamps) {
-      const archived = await fetchWaybackSnapshot(domain, year);
-      if (archived) {
-        setTimeout(() => {
-          setIsLoading(false);
-          navigate('/snapshot', { state: { snapshotUrl: archived } });
-        }, 1500);
+      setIsLoading(true);
+      const input = searchText.trim().toLowerCase();
+      const isDomain = input.includes('.') || input.includes('http');
+    
+      if (!isDomain) {
+        const keyword = encodeURIComponent(input);
+    
+        const googleTimestamps = getTimestampsForDomain("google.com");
+        for (const ts of googleTimestamps) {
+          const googleImageURL = `http://images.google.com/images?q=${keyword}`;
+          const archived = await fetchWaybackSnapshot(googleImageURL, ts);
+          if (archived) {
+            setIsLoading(false);
+            navigate('/snapshot', { state: { snapshotUrl: archived } });
+            return;
+          }
+        }
+    
+        const yahooTimestamps = getTimestampsForDomain("yahoo.com");
+        for (const ts of yahooTimestamps) {
+          const yahooImageURL = `http://images.search.yahoo.com/search/images?p=${keyword}`;
+          const archived = await fetchWaybackSnapshot(yahooImageURL, ts);
+          if (archived) {
+            setIsLoading(false);
+            navigate('/snapshot', { state: { snapshotUrl: archived } });
+            return;
+          }
+        }
+    
+        const askTimestamps = getTimestampsForDomain("ask.com");
+        for (const ts of askTimestamps) {
+          const askURL = `http://web.ask.com/web?q=${keyword}`;
+          const archived = await fetchWaybackSnapshot(askURL, ts);
+          if (archived) {
+            setIsLoading(false);
+            navigate('/snapshot', { state: { snapshotUrl: archived } });
+            return;
+          }
+        }
+        
+        const fallback = `https://web.archive.org/web/*/http://images.google.com/images?q=${keyword}`;
+        setIsLoading(false);
+        navigate('/snapshot', { state: { snapshotUrl: fallback } });
         return;
       }
-    }
-
-    setIsLoading(false);
-    navigate('/snapshot', { state: { snapshotUrl: fallbackSearch } });
-  };
-
+    
+      const domain = cleanInput(input);
+      const timestamps = getTimestampsForDomain(domain);
+    
+      for (const ts of timestamps) {
+        const archived = await fetchWaybackSnapshot(domain, ts);
+        if (archived) {
+          setTimeout(() => {
+            setIsLoading(false);
+            navigate('/snapshot', { state: { snapshotUrl: archived } });
+          }, 1500);
+          return;
+        }
+      }
+    
+      const fallbackSearch = `https://web.archive.org/web/*/${domain}`;
+      setIsLoading(false);
+      navigate('/snapshot', { state: { snapshotUrl: fallbackSearch } });
+    };
+    
+  
+  
   const handleLucky = async () => {
     setIsLoading(true);
     const classics = [
       'askjeeves.com', 'altavista.com', 'toyota.com', 'aol.com', 'lycos.com',
       'excite.com', 'myspace.com', 'photobucket.com', 'delicious.com', 'digg.com',
       'google.com', 'yahoo.com', 'ask.com', 'baidu.com', 'yandex.com',
-      'googleplus.com', 'youtube.com', 'instagram.com', 'facebook.com'
+      'googleplus.com', 'youtube.com', 'instagram.com', 'facebook.com', 'pinterest.com'
     ];
     const randomPick = classics[Math.floor(Math.random() * classics.length)];
     const domain = cleanInput(randomPick);
@@ -108,6 +178,10 @@ function Home() {
         placeholder="Enter your search..."
         className="w-full max-w-md px-4 py-2 border-2 border-gray-400 rounded-md shadow-inner mb-4 font-mono text-sm"
       />
+
+      <p className="text-xs text-gay-600 italic mt-2 mb-4 font-mono text center">
+        Type a website (like <span className="font-semibold">youtube.com</span>) or a keyword (like <span className="font-semibold">Barbie</span>) to dive through the past!
+      </p>
 
       <div className="flex gap-4">
         <button
