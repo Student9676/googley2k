@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import googleLogo from './assets/google.png';
 import clippyJumping from './assets/clippy_jumping.gif';
 import './App.css';
+import { Widget, CalanderWidget } from './Widget';
 import Clippy from './Clippy';
 
 function Home() {
@@ -104,6 +105,12 @@ function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-200 via-pink-200 to-purple-300 flex flex-col items-center justify-center px-4">
+      {/* WIDGETS - Fixed to the left */}
+      <div className="absolute left-8 top-10 flex flex-col gap-6">
+        <Widget />
+        <CalanderWidget />
+      </div>
+      
       {/* LOGO + Tagline */}
       <div className="flex flex-col items-center gap-4 mb-6">
         <img src={googleLogo} alt="Google Logo" className="max-w-xs" />

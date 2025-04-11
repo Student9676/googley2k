@@ -1,10 +1,20 @@
 .widget {
-  width: 150px;
-  height: 150px;
-  background-color: rgb(154, 59, 175);
+  width: 175px;
+  height: 175px;
+  background-image: url('/images/pixelcalendar.jpeg'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   padding: 20px;
+  border-radius: 0;
   margin-top: 20px;
+  font-family: Monaco, monospace; 
   text-align: center;
+  color: white; 
+}
+.calendar-text {
+  color: #ff69b4;
+  font-weight: bold;
 }
