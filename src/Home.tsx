@@ -12,12 +12,12 @@ function Home() {
   const cleanInput = (input: string) => {
     let cleaned = input.trim().toLowerCase();
 
-  const isLikelyDomain = cleaned.includes('.') || cleaned.includes('http');
+  const isLikelyDomain = cleaned.includes('.') || cleaned.includes('https');
   if (!isLikelyDomain && knownSites.includes(cleaned)) {
     cleaned += '.com';
   }
 
-  if (!cleaned.startsWith('http')) cleaned = 'https://' + cleaned;
+  if (!cleaned.startsWith('https')) cleaned = 'https://' + cleaned;
   return cleaned;
   };
 
@@ -72,14 +72,14 @@ function Home() {
   const handleSearch = async () => {
       setIsLoading(true);
       const input = searchText.trim().toLowerCase();
-      const isDomain = input.includes('.') || input.includes('http');
+      const isDomain = input.includes('.') || input.includes('https');
     
       if (!isDomain) {
         const keyword = encodeURIComponent(input);
     
         const googleTimestamps = getTimestampsForDomain("google.com");
         for (const ts of googleTimestamps) {
-          const googleImageURL = `http://images.google.com/images?q=${keyword}`;
+          const googleImageURL = `https://images.google.com/images?q=${keyword}`;
           const archived = await fetchWaybackSnapshot(googleImageURL, ts);
           if (archived) {
             setIsLoading(false);
@@ -90,7 +90,7 @@ function Home() {
     
         const yahooTimestamps = getTimestampsForDomain("yahoo.com");
         for (const ts of yahooTimestamps) {
-          const yahooImageURL = `http://images.search.yahoo.com/search/images?p=${keyword}`;
+          const yahooImageURL = `https://images.search.yahoo.com/search/images?p=${keyword}`;
           const archived = await fetchWaybackSnapshot(yahooImageURL, ts);
           if (archived) {
             setIsLoading(false);
@@ -101,7 +101,7 @@ function Home() {
     
         const askTimestamps = getTimestampsForDomain("ask.com");
         for (const ts of askTimestamps) {
-          const askURL = `http://web.ask.com/web?q=${keyword}`;
+          const askURL = `https://web.ask.com/web?q=${keyword}`;
           const archived = await fetchWaybackSnapshot(askURL, ts);
           if (archived) {
             setIsLoading(false);
