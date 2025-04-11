@@ -17,7 +17,7 @@ function Home() {
     cleaned += '.com';
   }
 
-  if (!cleaned.startsWith('http')) cleaned = 'http://' + cleaned;
+  if (!cleaned.startsWith('http')) cleaned = 'https://' + cleaned;
   return cleaned;
   };
 
