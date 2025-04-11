@@ -211,7 +211,7 @@ function Home() {
       {/* CLIPPY LOADER */}
       {isLoading && (
         <div className="mt-6 flex flex-col items-center z-10">
-          <img src={clippyJumping} alt="Clippy loading" className="w-12.5 animate-bounce" />
+          <img src={clippyJumping} alt="Clippy loading" className="w-12.5" />
           <p className="text-xs font-pixel text-gray-800 mt-2">Clippy is searching the archives...</p>
         </div>
       )}
