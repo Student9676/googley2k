@@ -3,9 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import clippyJumping from './assets/clippy_jumping.gif';
 import retroseekLogo from './assets/retroseek.png'
 import './App.css';
-import { Widget, CalanderWidget } from './Widget';
-import Clippy from './Clippy';
-
 
 function Home() {
   const [searchText, setSearchText] = useState('');
