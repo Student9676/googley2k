@@ -31,6 +31,7 @@ function App() {
 };
 
   const handleSearch = async () => {
+    setIsLoading(true);
     const domain = cleanInput(searchText);
     const fallbackTimestamps = [
       '20130919044612',
@@ -49,6 +50,7 @@ function App() {
       return;
     }
   }
+  setIsLoading(false);
   alert('No snapshots found!');
 };
 
@@ -58,27 +60,16 @@ const handleLucky = async () => {
   const classics = [
     "askjeeves.com",
     "altavista.com",
-    "geocities.com",
-    "angelfire.com",
-    "yahoo.com",
+    "toyota.com",
     "aol.com",
-    "netscape.com",
-    "hotmail.com",
     "lycos.com",
     "excite.com",
     "myspace.com",
-    "friendster.com",
-    "bebo.com",
-    "livejournal.com",
-    "blogger.com",
-    "flickr.com",
     "photobucket.com",
     "delicious.com",
     "digg.com",
-    "stumbleupon.com",
     "google.com",
     "yahoo.com",
-    "bing.com",
     "ask.com",
     "baidu.com",
     "yandex.com",
@@ -103,13 +94,12 @@ const handleLucky = async () => {
     const archived = await fetchWaybackSnapshot(domain, year);
     if (archived) {
       setSnapshotUrl(archived);
-      setIsLoading(false);
       console.log("Lucky snapshot:", archived);
       return;
     }
   }
   setIsLoading(false);
-  alert('No snapshots found for ${randomPick}');
+  alert(`No snapshots found for ${randomPick}`);
 };
 
 
@@ -164,12 +154,17 @@ const handleLucky = async () => {
         <>
           <iframe
             src={snapshotUrl}
-            className="w-full max-w-5xl h-[80vh] border-2 border-gray-500 shadow-lg"
+            onLoad={() => {setIsLoading(false)}}          
+            className={`transition-all duration-700 w-full max-w-5xl ${
+              isLoading ? 'h-0 opacity-0 pointer-events-none' : 'h-[80vh] opacity-100'
+            } border-2 border-gray-500 shadow-lg`}
             title="Wayback Snapshot"
           />
+        {snapshotUrl && !isLoading && (
           <div className="text-sm text-gray-800 mt-2 font-mono">
             Loaded from: <a href={snapshotUrl} target="_blank" className="underline">{snapshotUrl}</a>
           </div>
+        )}
         </>
       )}
     </div>

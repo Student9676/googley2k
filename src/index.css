@@ -43,7 +43,7 @@ button {
   padding: 0.07em 0.5em;
   font-size: 0.9em;
   font-weight: 500;
-  font-family: Arial, sans-serif;
+  font-family: monospace, sans-serif;
   background-color: rgb(223, 223, 223);
   color: black;
   cursor: pointer;
@@ -52,6 +52,7 @@ button {
 
 input {
   border: 1px solid rgb(134, 134, 134);
+  font-family: monospace;
 }
 
 @media (prefers-color-scheme: light) {
