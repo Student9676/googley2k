@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import googleLogo from './assets/google.png';
 import clippyJumping from './assets/clippy_jumping.gif';
 import './App.css';
 import { Widget, CalanderWidget } from './Widget';
 import Clippy from './Clippy';
+
 
 function Home() {
   const [searchText, setSearchText] = useState('');
@@ -174,7 +174,20 @@ function Home() {
       
       {/* LOGO + Tagline */}
       <div className="flex flex-col items-center gap-4 mb-6">
-        <img src={googleLogo} alt="Google Logo" className="max-w-xs" />
+      
+      <h1 className="text-8xl" style={{ fontFamily: '"Libre Baskerville", serif', textShadow: '4px 4px 8px rgba(0, 0, 0, 0.4)'
+}}>
+          <span className="text-blue-600">R</span>
+          <span className="text-red-600">e</span>
+          <span className="text-yellow-500">t</span>
+          <span className="text-blue-600">r</span>
+          <span className="text-green-600">o</span>
+          <span className="text-red-600">S</span>
+          <span className="text-yellow-500">e</span>
+          <span className="text-blue-600">e</span>
+          <span className="text-green-600">k</span>
+        </h1>
+        
         <p className="text-sm font-mono text-gray-800">
           Search to travel
         </p>
