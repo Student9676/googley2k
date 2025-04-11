@@ -1,10 +1,14 @@
 import { useState } from 'react'
 import googleLogo from './assets/google.png'
+import clippyJumping from './assets/clippy_jumping.gif'
 import './App.css'
+
 
 function App() {
   const [searchText, setSearchText] = useState('');
   const [snapshotUrl, setSnapshotUrl] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
 
   const cleanInput=(input: string)=>{
     let cleaned = input.trim().toLowerCase();
@@ -48,6 +52,67 @@ function App() {
   alert('No snapshots found!');
 };
 
+const handleLucky = async () => {
+  setIsLoading(true);
+
+  const classics = [
+    "askjeeves.com",
+    "altavista.com",
+    "geocities.com",
+    "angelfire.com",
+    "yahoo.com",
+    "aol.com",
+    "netscape.com",
+    "hotmail.com",
+    "lycos.com",
+    "excite.com",
+    "myspace.com",
+    "friendster.com",
+    "bebo.com",
+    "livejournal.com",
+    "blogger.com",
+    "flickr.com",
+    "photobucket.com",
+    "delicious.com",
+    "digg.com",
+    "stumbleupon.com",
+    "google.com",
+    "yahoo.com",
+    "bing.com",
+    "ask.com",
+    "baidu.com",
+    "yandex.com",
+    "googleplus.com",
+    "youtube.com"
+  ];
+
+  const randomPick = classics[Math.floor(Math.random() * classics.length)];
+  const domain = cleanInput(randomPick);
+
+  const fallbackTimestamps = [
+    '20130919044612',
+    '20130815000000',
+    '20121005000000',
+    '20111225000000',
+    '20101111000000'
+  ];
+
+  setSnapshotUrl(''); // clear old result
+
+  for (const year of fallbackTimestamps) {
+    const archived = await fetchWaybackSnapshot(domain, year);
+    if (archived) {
+      setSnapshotUrl(archived);
+      setIsLoading(false);
+      console.log("Lucky snapshot:", archived);
+      return;
+    }
+  }
+  setIsLoading(false);
+  alert('No snapshots found for ${randomPick}');
+};
+
+
   
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-200 via-pink-200 to-purple-300 flex flex-col items-center justify-center px-4">
@@ -80,10 +145,18 @@ function App() {
 
         <button
           className="bg-slate-100 border-2 border-gray-400 px-4 py-2 rounded-md font-bold font-mono text-sm hover:bg-purple-200 hover:shadow-lg transition-all"
+          onClick={handleLucky}
         >
           I'm Feeling Lucky
         </button>
       </div>
+
+      {isLoading && (
+        <div className="mt-6 flex flex-col items-center">
+          <img src={clippyJumping} alt="Loading Clippy" className="w-24 h-24" />
+          <p className="text-sm text-gray-700 font-mono mt-2">Clippy is searching...</p>
+        </div>
+      )}
 
       {/* SNAPSHOT RESULT*/}
       {/* SNAPSHOT RESULT */}
