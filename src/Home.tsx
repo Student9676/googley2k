@@ -52,15 +52,13 @@ function Home() {
     for (const year of timestamps) {
       const archived = await fetchWaybackSnapshot(domain, year);
       if (archived) {
-        setTimeout(() => {
-          setIsLoading(false);
-          navigate('/snapshot', { state: { snapshotUrl: archived } });
-        }, 1500);
+        navigate('/snapshot', { state: { snapshotUrl: archived } });
         return;
       }
     }
 
     setIsLoading(false);
+    const fallbackSearch = `https://web.archive.org/web/*/${domain}`;
     navigate('/snapshot', { state: { snapshotUrl: fallbackSearch } });
   };
 
@@ -89,10 +87,7 @@ function Home() {
     for (const year of timestamps) {
       const archived = await fetchWaybackSnapshot(domain, year);
       if (archived) {
-        setTimeout(() => {
-          setIsLoading(false);
-          navigate('/snapshot', { state: { snapshotUrl: archived } });
-        }, 1500);
+        navigate('/snapshot', { state: { snapshotUrl: archived } });
         return;
       }
     }
@@ -138,7 +133,7 @@ function Home() {
 
       {isLoading && (
         <div className="mt-6 flex flex-col items-center">
-          <img src={clippyJumping} alt="Loading Clippy" className="w-12.5 h-12.5 animate-bounce" />
+          <img src={clippyJumping} alt="Loading Clippy" className="w-12.5" />
           <p className="text-sm text-gray-700 font-mono mt-2">Clippy is searching...</p>
         </div>
       )}
