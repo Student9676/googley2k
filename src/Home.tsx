@@ -116,7 +116,7 @@ function Home() {
           <span className="text-yellow-500">t</span>
           <span className="text-blue-600">r</span>
           <span className="text-green-600">o</span>
-          <span className="text-red-600">G</span>
+          <span className="text-red-600">S</span>
           <span className="text-yellow-500">e</span>
           <span className="text-blue-600">e</span>
           <span className="text-green-600">k</span>
